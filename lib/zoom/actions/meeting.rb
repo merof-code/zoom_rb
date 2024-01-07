@@ -75,6 +75,12 @@ module Zoom
 
       # Get a meeting on Zoom via meeting ID, return the meeting info.
       get 'meeting_invitation', '/meetings/:meeting_id/invitation'
+
+      # Support for meeting surveys
+      # https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#operation/meetingSurveyGet
+      get "meeting_survey", "/meetings/:meeting_id/survey"
+      delete "meeting_delete_survey", "/meetings/:meeting_id/survey"
+      patch "meeting_update_survey", "/meetings/:meeting_id/survey"
     end
   end
 end

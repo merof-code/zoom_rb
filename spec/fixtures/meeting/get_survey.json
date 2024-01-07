@@ -1,0 +1,21 @@
+{
+  "custom_survey": {
+    "title": "Feedback on your live lecture",
+    "anonymous": false,
+    "feedback": "Thank you so much for taking the time to complete the survey. Your feedback really makes a difference.",
+    "questions": [
+      {
+        "name": "How useful was this lecture?",
+        "type": "rating_scale",
+        "answer_required": true,
+        "rating_min_value": 1,
+        "rating_max_value": 5,
+        "rating_min_label": "There is room for improvement",
+        "rating_max_label": "Very useful, I feel I learned a lot"
+      }
+    ],
+    "numbered_questions": false,
+    "show_question_type": false
+  },
+  "show_in_the_browser": true
+}
