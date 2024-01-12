@@ -49,6 +49,9 @@ module Zoom
           language occurrence_ids auto_approve
         ]
 
+      # Delete a meeting registrant.
+      delete 'meeting_delete_registrant', '/meetings/:meeting_id/registrants/:registrant_id'
+
       # Register up to 30 registrants at once for a meeting that requires registration.
       post 'batch_registrants', '/meetings/:meeting_id/batch_registrants',
         permit: %i[registrants auto_approve registrants_confirmation_email]
