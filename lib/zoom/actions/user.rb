@@ -69,6 +69,8 @@ module Zoom
 
       patch 'user_status_update', '/users/:id/status',
         permit: :status
+
+      get 'user_zak', '/users/me/zak'
     end
   end
 end
