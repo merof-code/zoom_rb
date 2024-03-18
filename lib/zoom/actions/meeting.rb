@@ -13,7 +13,7 @@ module Zoom
       post 'meeting_create', '/users/:user_id/meetings',
         permit: %i[
           topic type start_time duration schedule_for timezone password default_password agenda tracking_fields
-          recurrence settings template_id pre_schedule
+          recurrence settings template_id pre_schedule waiting_room
         ]
 
       # Get a meeting on Zoom via meeting ID, return the meeting info.
