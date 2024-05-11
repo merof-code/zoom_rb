@@ -2,11 +2,12 @@
 
 module Zoom
   class Error < StandardError
-    attr_reader :error_hash
+    attr_reader :code, :errors
 
-    def initialize(msg, error_hash={})
-      @error_hash = error_hash
-      super(msg)
+    def initialize(message, code = nil, errors = nil)
+      @code = code
+      @errors = errors
+      super(message)
     end
   end
   class GatewayTimeout < Error; end
@@ -14,7 +15,6 @@ module Zoom
   class ParameterMissing < Error; end
   class ParameterNotPermitted < Error; end
   class ParameterValueNotPermitted < Error; end
-  class AuthenticationError < Error; end
   class BadRequest < Error; end
   class Unauthorized < Error; end
   class Forbidden < Error; end

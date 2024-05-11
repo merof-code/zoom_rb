@@ -38,9 +38,11 @@ describe Zoom::Actions::Groups do
       end
 
       it 'raises Zoom::Error exception with text' do
-        expect { zc.groups_list }.to raise_error(Zoom::Error, {
-          base: 'A group with this 999999 does not exist.'
-        }.to_s)
+        expect { zc.groups_list }.to raise_error { |error|
+          expect(error).to be_a(Zoom::NotFound)
+          expect(error.message).to eq('A group with this 999999 does not exist.')
+          expect(error.code).to eq(4130)
+        }
       end
     end
   end

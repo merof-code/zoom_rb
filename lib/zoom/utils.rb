@@ -11,31 +11,34 @@ module Zoom
         name ? ArgumentError.new("Unrecognized parameter #{name}") : ArgumentError.new
       end
 
-      def raise_if_error!(response, http_code=200)
-        return response unless response.is_a?(Hash) && response.key?('code')
-
+      def raise_error(response, http_code=nil)
         code = response['code']
-        error_hash = build_error(response)
+        message = response['message']
+        errors = response['errors']
 
-        raise AuthenticationError, error_hash if code == 124
-        raise BadRequest, error_hash if code == 400
-        raise Unauthorized, error_hash if code == 401
-        raise Forbidden, error_hash if code == 403
-        raise NotFound, error_hash if code == 404
-        raise Conflict, error_hash if code == 409
-        raise TooManyRequests, error_hash if code == 429
-        raise InternalServerError, error_hash if code == 500
-        raise Error.new(error_hash, error_hash)
-      end
-
-      def build_error(response)
-        error_hash = { base: response['message']}
-        error_hash[response['message']] = response['errors'] if response['errors']
-        error_hash
+        case http_code
+        when 400
+          raise BadRequest.new(message, code, errors)
+        when 401
+          raise Unauthorized.new(message, code, errors)
+        when 403
+          raise Forbidden.new(message, code, errors)
+        when 404
+          raise NotFound.new(message, code, errors)
+        when 409
+          raise Conflict.new(message, code, errors)
+        when 429
+          raise TooManyRequests.new(message, code, errors)
+        when 500
+          raise InternalServerError.new(message, code, errors)
+        else
+          raise Error.new(message, code, errors)
+        end
       end
 
       def parse_response(http_response)
-        raise_if_error!(http_response.parsed_response, http_response.code) || http_response.code
+        return http_response.parsed_response || http_response.code if http_response.success?
+        raise_error(http_response.parsed_response, http_response.code)
       end
 
       def extract_options!(array)

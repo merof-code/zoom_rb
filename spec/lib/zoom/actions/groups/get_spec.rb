@@ -36,9 +36,11 @@ describe Zoom::Actions::Groups do
       end
 
       it 'raises Zoom::Error exception with text' do
-        expect { zc.groups_get(wrong_args) }.to raise_error(Zoom::Error, {
-          base: 'A group with this 999999 does not exist.'
-        }.to_s)
+        expect { zc.groups_get(wrong_args) }.to raise_error { |error|
+          expect(error).to be_a(Zoom::NotFound)
+          expect(error.message).to eq('A group with this 999999 does not exist.')
+          expect(error.code).to eq(4130)
+        }
       end
     end
 
@@ -53,9 +55,11 @@ describe Zoom::Actions::Groups do
       end
 
       it 'raises Zoom::Error exception with text' do
-        expect { zc.groups_get(wrong_args) }.to raise_error(Zoom::Error, {
-          base: 'Group does not belong to your account.'
-        }.to_s)
+        expect { zc.groups_get(wrong_args) }.to raise_error { |error|
+          expect(error).to be_a(Zoom::BadRequest)
+          expect(error.message).to eq('Group does not belong to your account.')
+          expect(error.code).to eq(1010)
+        }
       end
     end
   end

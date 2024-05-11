@@ -38,9 +38,11 @@ describe Zoom::Actions::IM::Chat do
       end
 
       it 'raises Zoom::Error exception' do
-        expect { zc.get_chat_channels(args) }.to raise_error(Zoom::BadRequest, {
-          base: "Unauthorized request. You do not have permission to access this user’s channel information."
-        }.to_s)
+        expect { zc.get_chat_channels(args) }.to raise_error { |error|
+          expect(error).to be_a(Zoom::BadRequest)
+          expect(error.message).to eq("Unauthorized request. You do not have permission to access this user's channel information.")
+          expect(error.code).to eq(200)
+        }
       end
     end
 
@@ -55,9 +57,11 @@ describe Zoom::Actions::IM::Chat do
       end
 
       it 'returns a hash 404' do
-        expect { zc.get_chat_channels(missed_channel_args) }.to raise_error(Zoom::Error, {
-          base: "Channel does not exist: #{missed_channel_args[:channel_id]}"
-        }.to_s)
+        expect { zc.get_chat_channels(missed_channel_args) }.to raise_error { |error|
+          expect(error).to be_a(Zoom::NotFound)
+          expect(error.message).to eq("Channel does not exist: #{missed_channel_args[:channel_id]}")
+          expect(error.code).to eq(4130)
+        }
       end
     end
   end
