@@ -66,6 +66,9 @@ module Zoom
           purchasing_time_frame role_in_purchase_process no_of_employees comments custom_questions
         ]
 
+      delete 'webinar_registrant_delete', '/webinars/:webinar_id/registrants/:registrant_id',
+        permit: :occurrence_id
+
       put 'webinar_registrants_status_update', '/webinars/:id/registrants/status',
         require: :action,
         permit: [ :occurrence_id, registrants: [] ]
