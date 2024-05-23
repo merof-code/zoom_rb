@@ -12,7 +12,7 @@ RSpec.describe Zoom::Actions::Webinar do
         stub_request(
           :get,
           zoom_url("/webinars/#{args[:webinar_id]}/polls/#{args[:poll_id]}")
-        ).to_return(status: :ok,
+        ).to_return(status: 200,
                     body: json_response('webinar', 'poll_get'),
                     headers: { 'Content-Type' => 'application/json' })
       end
@@ -35,7 +35,8 @@ RSpec.describe Zoom::Actions::Webinar do
         stub_request(
           :get,
           zoom_url("/webinars/#{args[:webinar_id]}/polls/#{args[:poll_id]}")
-        ).to_return(body: json_response('error', 'validation'),
+        ).to_return(status: 400,
+                    body: json_response('error', 'validation'),
                     headers: { 'Content-Type' => 'application/json' })
       end
 

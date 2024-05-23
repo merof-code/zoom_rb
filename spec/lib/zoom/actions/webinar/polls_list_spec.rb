@@ -12,7 +12,7 @@ describe Zoom::Actions::Webinar do
         stub_request(
           :get,
           zoom_url("/webinars/#{args[:webinar_id]}/polls")
-        ).to_return(status: :ok,
+        ).to_return(status: 200,
                     body: json_response('webinar', 'polls_list'),
                     headers: { 'Content-Type' => 'application/json' })
       end

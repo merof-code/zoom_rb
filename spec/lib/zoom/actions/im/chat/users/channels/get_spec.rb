@@ -36,9 +36,11 @@ describe Zoom::Actions::IM::Chat do
       end
 
       it 'raises Zoom::Error exception with text' do
-        expect { zc.get_chat_user_channels(args) }.to raise_error(Zoom::Error, {
-          base: 'The next page token is either invalid or has expired.'
-        }.to_s)
+        expect { zc.get_chat_user_channels(args) }.to raise_error { |error|
+          expect(error).to be_a(Zoom::BadRequest)
+          expect(error.message).to eq('The next page token is either invalid or has expired.')
+          expect(error.code).to eq(300)
+        }
       end
     end
   end
