@@ -91,6 +91,9 @@ module Zoom
 
       get 'past_webinars_absentees', '/past_webinars/:webinar_uuid/absentees',
         permit: %i[occurrence_id page_size next_page_token]
+
+      get 'past_webinars_participants', '/past_webinars/:webinar_id/participants',
+        permit: %i[page_size next_page_token]
     end
   end
 end
