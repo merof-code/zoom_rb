@@ -49,6 +49,9 @@ module Zoom
           language occurrence_ids auto_approve
         ]
 
+      # Get a meeting registrant
+      get 'meeting_get_registrant', '/meetings/:meeting_id/registrants/:registrant_id'
+
       # Delete a meeting registrant.
       delete 'meeting_delete_registrant', '/meetings/:meeting_id/registrants/:registrant_id'
 
