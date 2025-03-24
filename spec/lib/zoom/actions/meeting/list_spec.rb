@@ -4,7 +4,7 @@ require 'spec_helper'
 
 xdescribe Zoom::Actions::Meeting do
   let(:zc) { zoom_client }
-  let(:args) { { host_id: 'ufR93M2pRyy8ePFN92dttq' } }
+  let(:args) { { user_id: 'ufR93M2pRyy8ePFN92dttq' } }
 
   xdescribe '#meeting_list action' do
     before :each do
@@ -14,7 +14,7 @@ xdescribe Zoom::Actions::Meeting do
       ).to_return(body: json_response('meeting', 'list'))
     end
 
-    it "requires a 'host_id' argument" do
+    it "requires a 'user_id' argument" do
       expect { zc.meeting_list }.to raise_error(ArgumentError)
     end
 

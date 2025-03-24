@@ -6,8 +6,9 @@ module Zoom
       extend Zoom::Actions
 
       # List all the scheduled meetings on Zoom.
+      # https://developers.zoom.us/docs/api/meetings/#tag/meetings/GET/users/{userId}/meetings
       get 'meeting_list', '/users/:user_id/meetings',
-        permit: %i[type page_size next_page_token page_number]
+        permit: %i[type page_size next_page_token page_number from to timezone]
 
       # Create a meeting on Zoom, return the created meeting URL
       post 'meeting_create', '/users/:user_id/meetings',
